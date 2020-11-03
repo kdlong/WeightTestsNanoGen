@@ -1,24 +1,27 @@
 #!/bin/bash
 
-if [[ $# -lt 2 ]]; then
-    echo "Requires at least two command line arguments!"
+if [[ $# -lt 1 ]]; then
+    echo "Requires at least one command line arguments!"
     echo "ex. (last two args optional): bash genericNanoGenFromMini.sh <das_path> <outfile.root> <config_name.py> <nevents>"
     exit 1
 fi
 
 das_name=$1
-outfile=$2
-config_name=${2/.root/_cfg.py}
+temp=$(echo $1 | cut -d "/" -f2)
+outfile=${temp:1}.root
+config_name=configs/${outfile/.root/_cfg.py}
 nevents=1000
-if [[ $# -gt 2 ]]; then
-    config_name=$3
+
+customize=""
+if [[ $# -gt 1 ]]; then
+    customize="--customise_commands process.lheWeights.failIfInvalidXML=False"
 fi
-if [[ $# -gt 3 ]]; then
-    nevents=$4
+if [[ $# -gt 2 ]]; then
+    nevents=$3
 fi
 
 cmsDriver.py step1 --filein "dbs:$das_name" \
     --fileout $outfile --mc --eventcontent NANOAODGEN --datatier NANOAODSIM \
     --conditions 102X_mcRun2_asymptotic_v7 --step NANOGEN --nThreads 1 --python_filename $config_name \
-    --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n $nevents
+    --no_exec $customize --customise Configuration/DataProcessing/Utils.addMonitoring -n $nevents
 
