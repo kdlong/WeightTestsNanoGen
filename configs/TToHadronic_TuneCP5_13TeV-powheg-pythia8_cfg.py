@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step1 --filein dbs:/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM --fileout TToHadronic_TuneCP5_13TeV-powheg-pythia8.root --mc --eventcontent NANOAODGEN --datatier NANOAODSIM --conditions auto:mc --step NANOGEN --nThreads 1 --python_filename configs/TToHadronic_TuneCP5_13TeV-powheg-pythia8_cfg.py --no_exec --customise_commands process.lheWeights.failIfInvalidXML=False --customise Configuration/DataProcessing/Utils.addMonitoring -n 10
+# with command line options: step1 --filein dbs:/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM --fileout TToHadronic_TuneCP5_13TeV-powheg-pythia8.root --mc --eventcontent NANOAODGEN --datatier NANOAODSIM --conditions auto:mc --step NANOGEN --nThreads 1 --python_filename configs/TToHadronic_TuneCP5_13TeV-powheg-pythia8_cfg.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n 10
 import FWCore.ParameterSet.Config as cms
 
 
@@ -3428,7 +3428,6 @@ process = addMonitoring(process)
 
 # Customisation from command line
 
-process.lheWeights.failIfInvalidXML=False
 # Add early deletion of temporary data products to reduce peak memory need
 from Configuration.StandardSequences.earlyDeleteSettings_cff import customiseEarlyDelete
 process = customiseEarlyDelete(process)
