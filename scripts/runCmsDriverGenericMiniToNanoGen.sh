@@ -9,7 +9,7 @@ fi
 
 das_name=$1
 temp=$(echo $1 | cut -d "/" -f2)
-outfile=${temp:1}.root
+outfile=${temp}.root
 config_name=configs/${outfile/.root/_cfg.py}
 nevents=1000
 
