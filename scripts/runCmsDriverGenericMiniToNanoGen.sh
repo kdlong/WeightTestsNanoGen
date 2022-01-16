@@ -27,4 +27,4 @@ fi
 cmsDriver.py step1 --filein "dbs:$das_name" \
     --fileout $outfile --mc --eventcontent NANOAODGEN --datatier NANOAODSIM \
     --conditions auto:mc --step NANOGEN --nThreads 1 --python_filename $config_name \
-    --no_exec $customize --customise Configuration/DataProcessing/Utils.addMonitoring -n $nevents
+    --no_exec $customize -n $nevents

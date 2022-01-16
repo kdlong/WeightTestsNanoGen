@@ -7,15 +7,23 @@ if [[ $# -lt 2 ]]; then
 fi
 
 customize="--customise_commands process.RandomNumberGeneratorService.externalLHEProducer.initialSeed=999"
+
+fail=""
 if [[ $# -gt 2 ]]; then
+    if [[ $3 -gt 0 ]]; then 
+        fail="${customize}\nprocess.lheWeights.failIfInvalidXML=False"
+    fi
+fi
+
+if [[ $# -gt 3 ]]; then
     customize="${customize}\nprocess.externalLHEProducer.generateConcurrently=True --nThreads $3"
 fi
 
 fragment=${1/python\//}
 
-cmsDriver.py Configuration/WMassNanoGen/python/$fragment \
-    --fileout file:$2 --mc --eventcontent NANOAODSIM \
-    --datatier NANOAOD --conditions auto:mc --step LHE,GEN,NANOGEN \
+cmsDriver.py Configuration/WeightTestsNanoGen/python/$fragment \
+    --fileout file:$2 --mc --eventcontent RAWSIM,NANOAODSIM \
+    --datatier GEN,NANOAOD --conditions auto:mc --step LHE,GEN,NANOGEN \
     --python_filename configs/${fragment/cff/cfg} \
-    $customize \
+    $customize $fail \
     -n 30 --no_exec
